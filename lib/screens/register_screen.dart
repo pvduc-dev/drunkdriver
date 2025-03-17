@@ -56,6 +56,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: 6), // Khoảng cách giữa label và input
                 CupertinoTextField(
+                  keyboardType: TextInputType.phone,
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: Color(0xFFE2EAF1).withOpacity(0.5),
