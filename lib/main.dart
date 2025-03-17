@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './screens/home_screen.dart';
 import './screens/driver_request_screen.dart';
 import './screens/register_screen.dart';
-import './screens/profile_creation_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,15 +13,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return MaterialApp(
       title: 'SoberRide',
-      initialRoute: '/profile_creation',
+      initialRoute: '/register',
       routes: {
         '/': (context) => const HomeScreen(),
         '/request': (context) => DriverRequestScreen(),
         '/register': (context) => RegisterScreen(),
-        '/profile_creation': (context) => ProfileCreationScreen(),
       },
+      theme: ThemeData(
+        useMaterial3: true, // Kích hoạt Material 3
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue), // Bảng màu Material 3
+      ),
     );
   }
 }
