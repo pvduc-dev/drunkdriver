@@ -58,7 +58,8 @@ class RegisterScreenState extends State<RegisterScreen> {
                 CupertinoTextField(
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    border: Border.all(color: CupertinoColors.systemGrey, width: 1),
+                    color: Color(0xFFE2EAF1).withOpacity(0.5),
+                    border: Border.all(color: Color(0xFF8FA1B7).withOpacity(0.2), width: 2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
