@@ -10,8 +10,17 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class RegisterScreenState extends State<RegisterScreen> {
+  final FocusNode _focusNode = FocusNode();
   final _phoneController = TextEditingController();
   String _errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 300), () {
+      FocusScope.of(context).requestFocus(_focusNode);
+    });
+  }
 
   void _submitPhoneNumber() {
     final phoneNumber = _phoneController.text.trim();
@@ -59,9 +68,9 @@ class RegisterScreenState extends State<RegisterScreen> {
                   keyboardType: TextInputType.phone,
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Color(0xFFE2EAF1).withOpacity(0.5),
-                    border: Border.all(color: Color(0xFF8FA1B7).withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(8),
+                    color: Color(0xFFE2EAF1).withOpacity(0.2),
+                    border: Border.all(color: Color(0xFF8FA1B7).withOpacity(0.35), width: 1),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
               ],
@@ -78,7 +87,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   "Tiếp tục",
                   style: TextStyle(
                     color: Colors.white,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),
                 ),

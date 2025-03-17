@@ -1,3 +1,4 @@
+import 'package:drunkdriver/screens/profile_creation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './screens/home_screen.dart';
@@ -15,11 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SoberRide',
-      initialRoute: '/register',
+      initialRoute: '/profile_creation',
       routes: {
         '/': (context) => const HomeScreen(),
         '/request': (context) => DriverRequestScreen(),
         '/register': (context) => RegisterScreen(),
+        '/profile_creation': (context) => ProfileCreationScreen(),
       },
       theme: ThemeData(
         useMaterial3: true, // Kích hoạt Material 3
