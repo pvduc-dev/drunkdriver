@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:flutter/cupertino.dart';
+import '../services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -26,7 +27,7 @@ class RegisterScreenState extends State<RegisterScreen> {
     final phoneNumber = _phoneController.text.trim();
     if (phoneNumber.isEmpty) {
       setState(() {
-        _errorMessage = 'Vui lòng nhập số điện thoại!';
+        _errorMessage = 'Vui lòng nhập số điện thoại';
       });
     } else {
       setState(() {
@@ -36,14 +37,26 @@ class RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  void _sendOtp(String phoneNumber) {
-    Future.delayed(const Duration(seconds: 2), () {
+  void _sendOtp(String phoneNumber) async {
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:
+          (context) => Center(child: CupertinoActivityIndicator(radius: 15)),
+    );
+
+    try {
+      final response = await AuthService().sendOtp(phoneNumber);
+      if (!mounted) return;
+      Navigator.pop(context); // Đóng dialog loading
+      Navigator.pushNamed(context, '/', arguments: phoneNumber);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context); // Đóng dialog loading
       setState(() {
-        _errorMessage = 'Mã OTP đã được gửi đến $phoneNumber';
+        _errorMessage = 'Có lỗi xảy ra, vui lòng thử lại';
       });
-      // Điều hướng tới màn hình nhập OTP
-      // Navigator.pushNamed(context, '/otp');
-    });
+    }
   }
 
   @override
@@ -63,32 +76,50 @@ class RegisterScreenState extends State<RegisterScreen> {
                   "Nhập số điện thoại của bạn",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(height: 6), // Khoảng cách giữa label và input
-                CupertinoTextField(
-                  keyboardType: TextInputType.phone,
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFE2EAF1).withOpacity(0.2),
-                    border: Border.all(color: Color(0xFF8FA1B7).withOpacity(0.35), width: 1),
-                    borderRadius: BorderRadius.circular(12),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: CupertinoTextField(
+                    controller: _phoneController,
+                    autofocus: true,
+                    keyboardType: TextInputType.phone,
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE2EAF1).withAlpha(51),
+                      border: Border.all(
+                        color: Color(0xFF8FA1B7).withAlpha(89),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
+                if (_errorMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      _errorMessage,
+                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                  ),
               ],
             ),
-            Expanded(child: Container()), // Đẩy button xuống dưới
-            SizedBox(
-              width: double.infinity, // Chiều rộng full
-              child: CupertinoButton(
-                color: Color(0xFFFFC41E),
-                onPressed: () {
-                  print("Button được nhấn!");
-                },
-                child: Text(
-                  "Tiếp tục",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
+            Expanded(child: Container()),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: CupertinoButton(
+                  color: Color(0xFFFFC41E),
+                  onPressed: () {
+                    _submitPhoneNumber();
+                  },
+                  child: Text(
+                    "Tiếp tục",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
