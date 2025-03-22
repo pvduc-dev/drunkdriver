@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SoberRide',
-      initialRoute: '/profile-creation',
+      initialRoute: '/register',
       routes: {
         '/': (context) => const HomeScreen(),
         '/request': (context) => DriverRequestScreen(),
@@ -24,12 +24,6 @@ class MyApp extends StatelessWidget {
         '/otp': (context) => OtpScreen(),
         '/profile-creation': (context) => ProfileCreationScreen(),
       },
-      theme: ThemeData(
-        useMaterial3: true, // Kích hoạt Material 3
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-        ), // Bảng màu Material 3
-      ),
     );
   }
 }

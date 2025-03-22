@@ -69,56 +69,45 @@ class RegisterScreenState extends State<RegisterScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 72.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 68.0),
-                    child: Text(
-                      "Nhập số điện thoại của bạn",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  Text(
+                    "Nhập số điện thoại của bạn",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: CupertinoTextField(
-                      controller: _phoneController,
-                      focusNode: _focusNode,
-                      keyboardType: TextInputType.phone,
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFE2EAF1).withAlpha(51),
-                        border: Border.all(
-                          color: Color(0xFF8FA1B7).withAlpha(89),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
+                  SizedBox(height: 8.0),
+                  CupertinoTextField(
+                    controller: _phoneController,
+                    focusNode: _focusNode,
+                    keyboardType: TextInputType.phone,
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE2EAF1).withAlpha(51),
+                      border: Border.all(
+                        color: Color(0xFF8FA1B7).withAlpha(89),
+                        width: 1,
                       ),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   if (_errorMessage.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        _errorMessage,
-                        style: TextStyle(color: Colors.red, fontSize: 12),
-                      ),
+                    Column(
+                      children: [
+                        SizedBox(height: 8.0),
+                        Text(
+                          _errorMessage,
+                          style: TextStyle(color: Colors.red, fontSize: 12),
+                        ),
+                      ],
                     ),
                 ],
               ),
               Expanded(child: Container()),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: PrimaryButton(
-                  text: "Tiếp tục",
-                  onPressed: _submitPhoneNumber,
-                ),
-              ),
+              PrimaryButton(text: "Tiếp tục", onPressed: _submitPhoneNumber),
+              SizedBox(height: 16.0),
             ],
           ),
         ),

@@ -30,7 +30,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Họ và tên',
+                        'Họ và tên',
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w500,
@@ -53,110 +53,61 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Giới tính',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
+                  SizedBox(height: 16.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Giới tính',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            value: 'Male',
+                            groupValue: selectedGender,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedGender = value!;
+                              });
+                            },
                           ),
-                        ),
-                        SizedBox(height: 8.0),
-                        Row(
-                          children: [
-                            Radio<String>(
-                              value: 'Male',
-                              groupValue: selectedGender,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedGender = value!;
-                                });
-                              },
-                            ),
-                            Text('Nam', style: TextStyle(fontSize: 16.0)),
-                            SizedBox(width: 16),
-                            Radio<String>(
-                              value: 'Female',
-                              groupValue: selectedGender,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedGender = value!;
-                                });
-                              },
-                            ),
-                            Text('Nữ', style: TextStyle(fontSize: 16.0)),
-                          ],
-                        ),
-                      ],
-                    ),
+                          Text('Nam', style: TextStyle(fontSize: 16.0)),
+                          SizedBox(width: 16),
+                          Radio<String>(
+                            value: 'Female',
+                            groupValue: selectedGender,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedGender = value!;
+                              });
+                            },
+                          ),
+                          Text('Nữ', style: TextStyle(fontSize: 16.0)),
+                        ],
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Ngày sinh',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                          ),
+                  SizedBox(height: 16.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Ngày sinh',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
                         ),
-                        SizedBox(height: 8.0),
-                        GestureDetector(
-                          onTap: () async {},
-                          child: Container(
-                            padding: const EdgeInsets.all(12.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFE2EAF1).withAlpha(51),
-                              border: Border.all(
-                                color: Color(0xFF8FA1B7).withAlpha(89),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(CupertinoIcons.calendar),
-                                SizedBox(width: 8.0),
-                                Text(
-                                  _selectedDate != null
-                                      ? DateFormat(
-                                        'dd/MM/yyyy',
-                                      ).format(_selectedDate!)
-                                      : 'Chọn ngày sinh',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: CupertinoColors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Địa chỉ nhà',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(height: 8.0),
-                        CupertinoTextField(
-                          padding: const EdgeInsets.all(16.0),
-                          maxLines: 3,
+                      ),
+                      SizedBox(height: 8.0),
+                      GestureDetector(
+                        onTap: () async {},
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
                             color: Color(0xFFE2EAF1).withAlpha(51),
                             border: Border.all(
@@ -165,21 +116,62 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
+                          child: Row(
+                            children: [
+                              Icon(CupertinoIcons.calendar),
+                              SizedBox(width: 8.0),
+                              Text(
+                                _selectedDate != null
+                                    ? DateFormat(
+                                      'dd/MM/yyyy',
+                                    ).format(_selectedDate!)
+                                    : 'Chọn ngày sinh',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: CupertinoColors.black,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Địa chỉ nhà',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      CupertinoTextField(
+                        padding: const EdgeInsets.all(16.0),
+                        maxLines: 3,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFE2EAF1).withAlpha(51),
+                          border: Border.all(
+                            color: Color(0xFF8FA1B7).withAlpha(89),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
               Expanded(child: Container()),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: PrimaryButton(
-                  onPressed: () {
-                    // Add your action here
-                  },
-                  text: 'Đăng ký',
-                ),
+              SizedBox(height: 16.0),
+              PrimaryButton(
+                onPressed: () {
+                  // Add your action here
+                },
+                text: 'Đăng ký',
               ),
             ],
           ),
