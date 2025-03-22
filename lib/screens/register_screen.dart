@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../services/auth_service.dart';
+import '../widgets/primary_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -18,6 +19,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 300), () {
+      if (!mounted) return;
       FocusScope.of(context).requestFocus(_focusNode);
     });
   }
@@ -60,70 +62,65 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 68),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Nhập số điện thoại của bạn",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: CupertinoTextField(
-                    controller: _phoneController,
-                    autofocus: true,
-                    keyboardType: TextInputType.phone,
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFE2EAF1).withAlpha(51),
-                      border: Border.all(
-                        color: Color(0xFF8FA1B7).withAlpha(89),
-                        width: 1,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 68.0),
+                    child: Text(
+                      "Nhập số điện thoại của bạn",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
-                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                ),
-                if (_errorMessage.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      _errorMessage,
-                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    child: CupertinoTextField(
+                      controller: _phoneController,
+                      focusNode: _focusNode,
+                      keyboardType: TextInputType.phone,
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE2EAF1).withAlpha(51),
+                        border: Border.all(
+                          color: Color(0xFF8FA1B7).withAlpha(89),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
-              ],
-            ),
-            Expanded(child: Container()),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: CupertinoButton(
-                  color: Color(0xFFFFC41E),
-                  onPressed: () {
-                    _submitPhoneNumber();
-                  },
-                  child: Text(
-                    "Tiếp tục",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                  if (_errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        _errorMessage,
+                        style: TextStyle(color: Colors.red, fontSize: 12),
+                      ),
                     ),
-                  ),
+                ],
+              ),
+              Expanded(child: Container()),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: PrimaryButton(
+                  text: "Tiếp tục",
+                  onPressed: _submitPhoneNumber,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

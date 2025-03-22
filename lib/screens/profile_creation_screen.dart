@@ -1,306 +1,202 @@
+import 'package:drunkdriver/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:form_builder_extra_fields/form_builder_extra_fields.dart';
 
 class ProfileCreationScreen extends StatefulWidget {
   const ProfileCreationScreen({super.key});
 
   @override
-  ProfileCreationScreenState createState() => ProfileCreationScreenState();
+  State<ProfileCreationScreen> createState() => _ProfileCreationScreenState();
 }
 
-class ProfileCreationScreenState extends State<ProfileCreationScreen> {
-  final _nameController = TextEditingController();
-  final _addressController = TextEditingController();
-  DateTime? _selectedDate;
-  String? _selectedGender;
-
-  String? _nameError;
-  String? _genderError;
-  String? _dobError;
-  String? _addressError;
-
-  final List<String> _genders = ['Nam', 'Nữ', 'Khác'];
-
-  Future<void> _selectDate() async {
-    final DateTime? picked = await showCupertinoModalPopup<DateTime>(
-      context: context,
-      builder: (context) {
-        return Container(
-          height: 300,
-          color: CupertinoColors.white,
-          child: Column(
-            children: [
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  initialDateTime: _selectedDate ?? DateTime.now(),
-                  minimumDate: DateTime(1900),
-                  maximumDate: DateTime.now(),
-                  onDateTimeChanged: (DateTime newDate) {
-                    setState(() {
-                      _selectedDate = newDate;
-                      _dobError = null; // Xóa lỗi khi chọn ngày
-                    });
-                  },
-                ),
-              ),
-              CupertinoButton(
-                child: const Text('Xong'),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-
-    if (picked != null) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
-
-  void _validateForm() {
-    setState(() {
-      // Validate Họ và tên
-      _nameError = _nameController.text.trim().isEmpty ? 'Vui lòng nhập họ và tên' : null;
-
-      // Validate Giới tính
-      _genderError = _selectedGender == null ? 'Vui lòng chọn giới tính' : null;
-
-      // Validate Ngày sinh
-      _dobError = _selectedDate == null ? 'Vui lòng chọn ngày sinh' : null;
-
-      // Validate Địa chỉ
-      _addressError = _addressController.text.trim().isEmpty ? 'Vui lòng nhập địa chỉ' : null;
-    });
-
-    // Nếu không có lỗi, có thể xử lý tiếp (ở đây chỉ hiển thị thông báo)
-    if (_nameError == null && _genderError == null && _dobError == null && _addressError == null) {
-      // Form hợp lệ, bạn có thể thêm logic ở đây
-      showCupertinoDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-          title: const Text('Thành công'),
-          content: const Text('Thông tin của bạn đã được ghi nhận.'),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
-  }
+class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Tạo hồ sơ cá nhân'),
-      ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Vui lòng điền thông tin của bạn',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
-                  // Họ và tên
-                  CupertinoTextField(
-                    controller: _nameController,
-                    placeholder: 'Họ và tên',
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: _nameError != null ? CupertinoColors.systemRed : CupertinoColors.lightBackgroundGray,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _nameError = null; // Xóa lỗi khi người dùng nhập
-                      });
-                    },
-                  ),
-                  if (_nameError != null) ...[
-                    const SizedBox(height: 5),
-                    Text(
-                      _nameError!,
-                      style: const TextStyle(color: CupertinoColors.systemRed, fontSize: 14),
-                    ),
-                  ],
-                  const SizedBox(height: 20),
-                  // Giới tính
-                  const Text(
-                    'Giới tính',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      showCupertinoModalPopup(
-                        context: context,
-                        builder: (context) => CupertinoActionSheet(
-                          title: const Text('Chọn giới tính'),
-                          actions: _genders.map((gender) {
-                            return CupertinoActionSheetAction(
-                              onPressed: () {
-                                setState(() {
-                                  _selectedGender = gender;
-                                  _genderError = null; // Xóa lỗi khi chọn
-                                });
-                                Navigator.pop(context);
-                              },
-                              child: Text(gender),
-                            );
-                          }).toList(),
-                          cancelButton: CupertinoActionSheetAction(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Hủy'),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(height: 72),
+                Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Họ và tên',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: _genderError != null ? CupertinoColors.systemRed : CupertinoColors.lightBackgroundGray,
+                        SizedBox(height: 8.0),
+                        FormBuilderTextField(
+                          name: 'fullName',
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Color(0xFFE2EAF1).withAlpha(51),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                color: Color(0xFF8FA1B7).withAlpha(89),
+                                width: 1,
+                              ),
+                            ),
+                            contentPadding: EdgeInsets.all(16.0),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Vui lòng nhập họ tên';
+                            }
+                            return null;
+                          },
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _selectedGender ?? 'Chọn giới tính',
+                            'Giới tính',
                             style: TextStyle(
-                              color: _selectedGender == null ? CupertinoColors.systemGrey : CupertinoColors.black,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const Icon(CupertinoIcons.chevron_down),
+                          SizedBox(height: 8.0),
+                          FormBuilderRadioGroup(
+                            name: 'gender',
+                            options: [
+                              FormBuilderFieldOption(
+                                value: 'Male',
+                                child: Text('Nam'),
+                              ),
+                              FormBuilderFieldOption(
+                                value: 'Female',
+                                child: Text('Nữ'),
+                              ),
+                            ],
+                            initialValue: 'Male',
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  if (_genderError != null) ...[
-                    const SizedBox(height: 5),
-                    Text(
-                      _genderError!,
-                      style: const TextStyle(color: CupertinoColors.systemRed, fontSize: 14),
-                    ),
-                  ],
-                  const SizedBox(height: 20),
-                  // Ngày sinh
-                  const Text(
-                    'Ngày sinh',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: _selectDate,
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: _dobError != null ? CupertinoColors.systemRed : CupertinoColors.lightBackgroundGray,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _selectedDate == null
-                                ? 'Chọn ngày sinh'
-                                : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
+                            'Ngày sinh',
                             style: TextStyle(
-                              color: _selectedDate == null ? CupertinoColors.systemGrey : CupertinoColors.black,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const Icon(CupertinoIcons.calendar),
+                          SizedBox(height: 8.0),
+                          FormBuilderDateTimePicker(
+                            name: 'birthDate',
+                            inputType: InputType.date,
+                            format: DateFormat('dd/MM/yyyy'),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color(0xFFE2EAF1).withAlpha(51),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Color(0xFF8FA1B7).withAlpha(89),
+                                  width: 1,
+                                ),
+                              ),
+                              prefixIcon: Icon(CupertinoIcons.calendar),
+                              contentPadding: EdgeInsets.all(16.0),
+                            ),
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Vui lòng chọn ngày sinh';
+                              }
+                              return null;
+                            },
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  if (_dobError != null) ...[
-                    const SizedBox(height: 5),
-                    Text(
-                      _dobError!,
-                      style: const TextStyle(color: CupertinoColors.systemRed, fontSize: 14),
-                    ),
-                  ],
-                  const SizedBox(height: 20),
-                  // Địa chỉ nhà
-                  CupertinoTextField(
-                    controller: _addressController,
-                    placeholder: 'Địa chỉ nhà',
-                    padding: const EdgeInsets.all(16.0),
-                    maxLines: 3,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: _addressError != null ? CupertinoColors.systemRed : CupertinoColors.lightBackgroundGray,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Địa chỉ nhà',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          FormBuilderTextField(
+                            name: 'address',
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color(0xFFE2EAF1).withAlpha(51),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Color(0xFF8FA1B7).withAlpha(89),
+                                  width: 1,
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.all(16.0),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Vui lòng nhập địa chỉ';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
                       ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _addressError = null; // Xóa lỗi khi người dùng nhập
-                      });
-                    },
-                  ),
-                  if (_addressError != null) ...[
-                    const SizedBox(height: 5),
-                    Text(
-                      _addressError!,
-                      style: const TextStyle(color: CupertinoColors.systemRed, fontSize: 14),
                     ),
                   ],
-                  // Thêm khoảng trống để nút không che nội dung
-                  const SizedBox(height: 80),
-                ],
-              ),
-            ),
-            // Nút Đăng ký ở dưới cùng
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                color: CupertinoColors.white,
-                child: CupertinoButton.filled(
-                  onPressed: _validateForm,
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'Đăng ký',
-                      style: TextStyle(fontSize: 18),
-                    ),
+                ),
+                Expanded(child: Container()),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: PrimaryButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.saveAndValidate() ?? false) {
+                        final formData = _formKey.currentState!.value;
+                        print(formData);
+                        // TODO: Handle form submission
+                      }
+                    },
+                    text: 'Đăng ký',
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _addressController.dispose();
-    super.dispose();
   }
 }
