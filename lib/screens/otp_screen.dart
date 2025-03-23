@@ -34,12 +34,12 @@ class _OtpScreenState extends State<OtpScreen> {
         ),
       );
       if (!mounted) return;
-      Navigator.pop(context); // Đóng dialog loading
+      Navigator.pop(context);
       Navigator.pushNamed(context, '/profile-creation',
           arguments: response.data?.data);
     } on DioException catch (e) {
       if (!mounted) return;
-      Navigator.pop(context); // Đóng dialog loading
+      Navigator.pop(context);
       switch (e.type) {
         case DioExceptionType.badResponse:
           final message = e.response?.data?['message'];
