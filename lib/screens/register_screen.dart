@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../services/auth_service.dart';
 import '../widgets/primary_button.dart';
+import 'package:openapi/openapi.dart';
+import '../services/api_service.dart';
+import '../utils/dialog_utils.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -14,10 +17,13 @@ class RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _focusNode = FocusNode();
   final _phoneController = TextEditingController();
   String _errorMessage = '';
+  late final Openapi _api;
 
   @override
   void initState() {
     super.initState();
+    _api = ApiService().api;
+    ApiService().initializeInterceptors(context);
     Future.delayed(Duration(milliseconds: 300), () {
       if (!mounted) return;
       FocusScope.of(context).requestFocus(_focusNode);
@@ -31,32 +37,23 @@ class RegisterScreenState extends State<RegisterScreen> {
         _errorMessage = 'Vui lòng nhập số điện thoại';
       });
     } else {
-      setState(() {
-        _errorMessage = 'Đang gửi mã OTP...';
-      });
       _sendOtp(phoneNumber);
     }
   }
 
   void _sendOtp(String phoneNumber) async {
-    showCupertinoDialog(
-      context: context,
-      barrierDismissible: false,
-      builder:
-          (context) => Center(child: CupertinoActivityIndicator(radius: 15)),
-    );
+    DialogUtils.showLoadingDialog(context);
 
     try {
-      final response = await AuthService().sendOtp(phoneNumber);
+      final response = await _api.getAuthApi().authControllerSendOtp(
+        sendOtpRequest: SendOtpRequest(phone: phoneNumber),
+      );
       if (!mounted) return;
       Navigator.pop(context); // Đóng dialog loading
-      Navigator.pushNamed(context, '/', arguments: phoneNumber);
+      Navigator.pushNamed(context, '/otp', arguments: response.data?.data);
     } catch (e) {
       if (!mounted) return;
       Navigator.pop(context); // Đóng dialog loading
-      setState(() {
-        _errorMessage = 'Có lỗi xảy ra, vui lòng thử lại';
-      });
     }
   }
 
