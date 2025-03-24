@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:drunkdriver/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -74,7 +75,7 @@ class _BookingScreenState extends State<BookingScreen> {
         attributionButtonMargins: Point(-30, -30),
       ),
       bottomSheet: SizedBox(
-        height: 313,
+        height: 330,
         width: double.infinity,
         child: Container(
           padding: EdgeInsets.all(16),
@@ -96,71 +97,37 @@ class _BookingScreenState extends State<BookingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Điểm xuất phát',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  CupertinoTextField(
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFE2EAF1).withAlpha(51),
-                      border: Border.all(
-                        color: Color(0xFF8FA1B7).withAlpha(89),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    onChanged: (value) {
-                      // Handle changes here
-                    },
-                  ),
-                ],
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: Text('Điểm xuất phát'),
+                subtitle: Text('Toà nhà Sông Đà'),
+                trailing: const Icon(Icons.arrow_forward),
+              ),
+              Divider(
+                height: 32.0,
+                thickness: 1.0,
+                color: Color(0xFF8FA1B7).withAlpha(89),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: Text('Điểm đến'),
+                subtitle: Text(
+                  'Số 123, đường Nguyễn Văn Cự, phường 1, quận 3, TP.HCM',
+                ),
+                trailing: const Icon(Icons.arrow_forward),
               ),
               SizedBox(height: 8.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Điểm đến',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  CupertinoTextField(
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFE2EAF1).withAlpha(51),
-                      border: Border.all(
-                        color: Color(0xFF8FA1B7).withAlpha(89),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    onChanged: (value) {
-                      // Handle changes here
-                    },
-                  ),
-                ],
-              ),
               SizedBox(height: 8.0),
               Divider(
                 height: 32.0,
                 thickness: 1.0,
                 color: Color(0xFF8FA1B7).withAlpha(89),
               ),
-              Row(
-                children: [],
+              Row(children: []),
+              PrimaryButton(
+                text: 'Đặt tài xế đến đón với giá: 20.000đ',
+                onPressed: () {},
               ),
-              PrimaryButton(text: 'Đặt tài xế đến đón với giá: 20.000đ', onPressed: () {}),
               SizedBox(height: 12.0),
             ],
           ),

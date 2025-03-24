@@ -11,6 +11,17 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Tài khoản'));
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.star),
+            title: const Text('Tiêu đề'),
+            subtitle: const Text('Phụ đề'),
+          ),
+        ],
+      ),
+    );
   }
 }
