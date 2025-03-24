@@ -43,6 +43,9 @@ dependencies:
     path: ./lib/api
   geolocator: ^13.0.3
   flutter_keyboard_visibility: ^6.0.0
+  iconsax_flutter: ^1.0.0
+  convex_bottom_bar: ^3.2.0
+  maplibre_gl: ^0.21.0
   
 dev_dependencies:
   flutter_test:

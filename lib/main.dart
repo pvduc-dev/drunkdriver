@@ -1,28 +1,30 @@
+import 'package:drunkdriver/screens/driver_request_screen.dart';
+import 'package:drunkdriver/screens/main_screen.dart';
 import 'package:drunkdriver/screens/otp_screen.dart';
 import 'package:drunkdriver/screens/profile_creation_screen.dart';
+import 'package:drunkdriver/screens/register_screen.dart';
+import 'package:drunkdriver/screens/booking_screen.dart';
 import 'package:flutter/material.dart';
-import './screens/home_screen.dart';
-import './screens/driver_request_screen.dart';
-import './screens/register_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const DrunkApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class DrunkApp extends StatelessWidget {
+  const DrunkApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SoberRide',
-      initialRoute: '/register',
+      initialRoute: '/booking',
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => MainScreen(),
         '/request': (context) => DriverRequestScreen(),
         '/register': (context) => RegisterScreen(),
         '/otp': (context) => OtpScreen(),
         '/profile-creation': (context) => ProfileCreationScreen(),
+        '/booking': (context) => BookingScreen(),
       },
     );
   }

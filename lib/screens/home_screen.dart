@@ -1,16 +1,17 @@
+import 'package:drunkdriver/widgets/bottom_nav_bar.dart';
+import 'package:drunkdriver/widgets/marker_button.dart';
 import 'package:flutter/material.dart';
-import '../widgets/marker_button.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: MarkerButton(),
-      ),
-    );
+    return Center(child: MarkerButton());
   }
 }
