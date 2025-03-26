@@ -15,31 +15,31 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConvexAppBar(
+    return BottomNavigationBar(
       backgroundColor: const Color(0xFFFFC41E),
-      color: Colors.grey[200],
-      activeColor: Colors.white,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.grey[200],
+      currentIndex: selectedIndex,
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
+      unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
+      onTap: onTap,
       items: const [
-        TabItem(
-          icon: Iconsax.clock_copy,
-          activeIcon: Iconsax.clock,
-          title: 'Lịch sử',
+        BottomNavigationBarItem(
+          icon: Icon(Iconsax.clock_copy),
+          activeIcon: Icon(Iconsax.clock),
+          label: 'Lịch sử',
         ),
-        TabItem(
-          icon: Iconsax.lifebuoy_copy,
-          activeIcon: Iconsax.lifebuoy,
-          title: 'Trang chủ',
+        BottomNavigationBarItem(
+          icon: Icon(Iconsax.aave_aave_copy),
+          activeIcon: Icon(Iconsax.aave_aave),
+          label: 'Trang chủ',
         ),
-        TabItem(
-          icon: CupertinoIcons.person,
-          activeIcon: CupertinoIcons.person_fill,
-          title: 'Tài khoản',
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.person),
+          activeIcon: Icon(CupertinoIcons.person_fill),
+          label: 'Tài khoản',
         ),
       ],
-      style: TabStyle.fixedCircle,
-      cornerRadius: 16,
-      initialActiveIndex: selectedIndex,
-      onTap: onTap,
     );
   }
 }

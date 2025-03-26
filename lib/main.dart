@@ -26,6 +26,9 @@ class DrunkApp extends StatelessWidget {
         '/profile-creation': (context) => ProfileCreationScreen(),
         '/booking': (context) => BookingScreen(),
       },
+      theme: ThemeData(
+        fontFamily: 'SF Pro Display',
+      ),
     );
   }
 }
