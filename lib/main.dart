@@ -28,6 +28,9 @@ class DrunkApp extends StatelessWidget {
       },
       theme: ThemeData(
         fontFamily: 'SF Pro Display',
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }

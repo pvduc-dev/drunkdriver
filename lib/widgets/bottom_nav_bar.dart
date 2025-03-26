@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -20,8 +19,8 @@ class BottomNavBar extends StatelessWidget {
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.grey[200],
       currentIndex: selectedIndex,
-      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
-      unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+      unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
       onTap: onTap,
       items: const [
         BottomNavigationBarItem(

@@ -67,10 +67,10 @@ class MarkerButtonState extends State<MarkerButton>
             height: 200,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.green,
+              color: Colors.orange,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.greenAccent,
+                  color: Colors.orangeAccent,
                   blurRadius: 10,
                   spreadRadius: 2,
                 ),
@@ -106,7 +106,7 @@ class MarkerPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4
-      ..color = Colors.green.withOpacity(opacity);
+      ..color = Colors.orange.withOpacity(opacity);
 
     // Vẽ vòng tròn lan tỏa
     canvas.drawCircle(center, 100 + radius, paint);
