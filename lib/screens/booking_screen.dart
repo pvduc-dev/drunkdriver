@@ -3,9 +3,7 @@ import 'dart:math';
 
 import 'package:drunkdriver/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
-import 'package:flutter/cupertino.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -75,10 +73,9 @@ class _BookingScreenState extends State<BookingScreen> {
         attributionButtonMargins: Point(-30, -30),
       ),
       bottomSheet: SizedBox(
-        height: 330,
+        height: 320,
         width: double.infinity,
         child: Container(
-          padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -98,37 +95,77 @@ class _BookingScreenState extends State<BookingScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                contentPadding: EdgeInsets.all(0),
-                title: Text('Điểm xuất phát'),
+                title: Text(
+                  'Điểm xuất phát',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
                 subtitle: Text('Toà nhà Sông Đà'),
-                trailing: const Icon(Icons.arrow_forward),
+                trailing: const Icon(Icons.edit),
               ),
-              Divider(
-                height: 32.0,
-                thickness: 1.0,
-                color: Color(0xFF8FA1B7).withAlpha(89),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Divider(
+                  thickness: 1.0,
+                  color: Color(0xFF8FA1B7).withAlpha(89),
+                ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.all(0),
-                title: Text('Điểm đến'),
+                title: Text(
+                  'Điểm đến',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
                 subtitle: Text(
                   'Số 123, đường Nguyễn Văn Cự, phường 1, quận 3, TP.HCM',
                 ),
-                trailing: const Icon(Icons.arrow_forward),
+                trailing: const Icon(Icons.edit),
               ),
-              SizedBox(height: 8.0),
-              SizedBox(height: 8.0),
-              Divider(
-                height: 32.0,
-                thickness: 1.0,
-                color: Color(0xFF8FA1B7).withAlpha(89),
+              Divider(thickness: 1.0, color: Color(0xFF8FA1B7).withAlpha(89)),
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                        border: InputBorder.none,
+                      ),
+                      value: 'cash',
+                      items: [
+                        DropdownMenuItem(
+                          value: 'cash',
+                          child: Row(
+                            children: [
+                              Icon(Icons.money, color: Colors.green),
+                              SizedBox(width: 8.0),
+                              Text('Tiền mặt'),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem(
+                          value: 'wallet',
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.account_balance_wallet,
+                                color: Colors.blue,
+                              ),
+                              SizedBox(width: 8.0),
+                              Text('Ví điện tử'),
+                            ],
+                          ),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  SizedBox(width: 16.0),
+                  Expanded(child: Text('Giá: 20.000đ')),
+                ],
               ),
-              Row(children: []),
-              PrimaryButton(
-                text: 'Đặt tài xế đến đón với giá: 20.000đ',
-                onPressed: () {},
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: PrimaryButton(text: 'Đặt tài xế', onPressed: () {}),
               ),
-              SizedBox(height: 12.0),
+              SizedBox(height: 20.0),
             ],
           ),
         ),

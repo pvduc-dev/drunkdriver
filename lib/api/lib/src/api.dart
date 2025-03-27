@@ -10,7 +10,7 @@ import 'package:openapi/src/auth/oauth.dart';
 import 'package:openapi/src/api/auth_api.dart';
 
 class Openapi {
-  static const String basePath = r'http://localhost';
+  static const String basePath = r'http://192.168.31.98:3000';
 
   final Dio dio;
   Openapi({

@@ -16,6 +16,7 @@ export 'package:openapi/src/model/send_otp_data.dart';
 export 'package:openapi/src/model/send_otp_request.dart';
 export 'package:openapi/src/model/send_otp_response.dart';
 export 'package:openapi/src/model/user_dto.dart';
+export 'package:openapi/src/model/verify_otp_data.dart';
 export 'package:openapi/src/model/verify_otp_request.dart';
 export 'package:openapi/src/model/verify_otp_response.dart';
 

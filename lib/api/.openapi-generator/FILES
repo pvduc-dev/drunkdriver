@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 analysis_options.yaml
 build.yaml
@@ -9,6 +8,7 @@ doc/SendOtpData.md
 doc/SendOtpRequest.md
 doc/SendOtpResponse.md
 doc/UserDto.md
+doc/VerifyOtpData.md
 doc/VerifyOtpRequest.md
 doc/VerifyOtpResponse.md
 lib/openapi.dart
@@ -25,14 +25,8 @@ lib/src/model/send_otp_data.dart
 lib/src/model/send_otp_request.dart
 lib/src/model/send_otp_response.dart
 lib/src/model/user_dto.dart
+lib/src/model/verify_otp_data.dart
 lib/src/model/verify_otp_request.dart
 lib/src/model/verify_otp_response.dart
 pubspec.yaml
-test/auth_api_test.dart
-test/otp_dto_test.dart
-test/send_otp_data_test.dart
-test/send_otp_request_test.dart
-test/send_otp_response_test.dart
-test/user_dto_test.dart
-test/verify_otp_request_test.dart
-test/verify_otp_response_test.dart
+test/verify_otp_data_test.dart

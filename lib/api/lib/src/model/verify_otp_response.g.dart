@@ -8,23 +8,19 @@ part of 'verify_otp_response.dart';
 
 VerifyOtpResponse _$VerifyOtpResponseFromJson(Map<String, dynamic> json) =>
     $checkedCreate('VerifyOtpResponse', json, ($checkedConvert) {
-      $checkKeys(
-        json,
-        requiredKeys: const ['message', 'data', 'accessToken', 'refreshToken'],
-      );
+      $checkKeys(json, requiredKeys: const ['data', 'message']);
       final val = VerifyOtpResponse(
+        data: $checkedConvert(
+          'data',
+          (v) => VerifyOtpData.fromJson(v as Map<String, dynamic>),
+        ),
         message: $checkedConvert('message', (v) => v as String),
-        data: $checkedConvert('data', (v) => v as Object),
-        accessToken: $checkedConvert('accessToken', (v) => v as String),
-        refreshToken: $checkedConvert('refreshToken', (v) => v as String),
       );
       return val;
     });
 
 Map<String, dynamic> _$VerifyOtpResponseToJson(VerifyOtpResponse instance) =>
     <String, dynamic>{
+      'data': instance.data.toJson(),
       'message': instance.message,
-      'data': instance.data,
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
     };

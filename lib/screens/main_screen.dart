@@ -1,4 +1,5 @@
 import 'package:drunkdriver/screens/account_screen.dart';
+import 'package:drunkdriver/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:drunkdriver/widgets/bottom_nav_bar.dart';
 
@@ -13,12 +14,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   // Danh sách các màn hình
   static final List<Widget> _screens = [
-    const HistoryScreen(),
     const HomeScreen(),
+    const HistoryScreen(),
+    const NotificationScreen(),
     const AccountScreen(),
   ];
 

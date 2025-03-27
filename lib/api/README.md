@@ -62,7 +62,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://192.168.31.98:3000*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -77,6 +77,7 @@ Class | Method | HTTP request | Description
  - [SendOtpRequest](doc/SendOtpRequest.md)
  - [SendOtpResponse](doc/SendOtpResponse.md)
  - [UserDto](doc/UserDto.md)
+ - [VerifyOtpData](doc/VerifyOtpData.md)
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)
  - [VerifyOtpResponse](doc/VerifyOtpResponse.md)
 

@@ -3,6 +3,7 @@ import 'package:openapi/src/model/send_otp_data.dart';
 import 'package:openapi/src/model/send_otp_request.dart';
 import 'package:openapi/src/model/send_otp_response.dart';
 import 'package:openapi/src/model/user_dto.dart';
+import 'package:openapi/src/model/verify_otp_data.dart';
 import 'package:openapi/src/model/verify_otp_request.dart';
 import 'package:openapi/src/model/verify_otp_response.dart';
 
@@ -34,6 +35,8 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return SendOtpResponse.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'UserDto':
           return UserDto.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'VerifyOtpData':
+          return VerifyOtpData.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'VerifyOtpRequest':
           return VerifyOtpRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'VerifyOtpResponse':
