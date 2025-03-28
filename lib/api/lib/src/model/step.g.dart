@@ -30,7 +30,7 @@ Step _$StepFromJson(Map<String, dynamic> json) => $checkedCreate(
       ),
       duration: $checkedConvert(
         'duration',
-        (v) => Duration.fromJson(v as Map<String, dynamic>),
+        (v) => DurationDto.fromJson(v as Map<String, dynamic>),
       ),
       endLocation: $checkedConvert(
         'end_location',

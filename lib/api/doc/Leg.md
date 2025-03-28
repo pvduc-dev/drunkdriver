@@ -9,7 +9,7 @@ import 'package:openapi/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **distance** | [**Distance**](Distance.md) |  | 
-**duration** | [**Duration**](Duration.md) |  | 
+**duration** | [**DurationDto**](DurationDto.md) |  | 
 **endAddress** | **String** |  | 
 **endLocation** | [**LatLngLiteral**](LatLngLiteral.md) |  | 
 **startAddress** | **String** |  | 

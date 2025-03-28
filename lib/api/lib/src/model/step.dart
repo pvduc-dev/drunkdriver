@@ -5,8 +5,8 @@
 // ignore_for_file: unused_element
 import 'package:openapi/src/model/lat_lng_literal.dart';
 import 'package:openapi/src/model/distance.dart';
-import 'package:openapi/src/model/duration.dart';
 import 'package:openapi/src/model/step_polyline.dart';
+import 'package:openapi/src/model/duration_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'step.g.dart';
@@ -59,7 +59,7 @@ class Step {
   )
 
 
-  final Duration duration;
+  final DurationDto duration;
 
 
 

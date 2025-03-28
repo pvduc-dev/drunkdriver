@@ -6,7 +6,7 @@ import 'package:openapi/src/model/create_profile_request.dart';
 import 'package:openapi/src/model/create_trip_request.dart';
 import 'package:openapi/src/model/direction_response.dart';
 import 'package:openapi/src/model/distance.dart';
-import 'package:openapi/src/model/duration.dart';
+import 'package:openapi/src/model/duration_dto.dart';
 import 'package:openapi/src/model/geocoded_waypoint.dart';
 import 'package:openapi/src/model/geocoding_result.dart';
 import 'package:openapi/src/model/geometry.dart';
@@ -63,8 +63,8 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return DirectionResponse.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'Distance':
           return Distance.fromJson(value as Map<String, dynamic>) as ReturnType;
-        case 'Duration':
-          return Duration.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'DurationDto':
+          return DurationDto.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'GeocodedWaypoint':
           return GeocodedWaypoint.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'GeocodingResult':

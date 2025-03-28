@@ -29,7 +29,7 @@ Leg _$LegFromJson(Map<String, dynamic> json) => $checkedCreate(
       ),
       duration: $checkedConvert(
         'duration',
-        (v) => Duration.fromJson(v as Map<String, dynamic>),
+        (v) => DurationDto.fromJson(v as Map<String, dynamic>),
       ),
       endAddress: $checkedConvert('end_address', (v) => v as String),
       endLocation: $checkedConvert(

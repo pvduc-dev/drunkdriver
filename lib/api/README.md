@@ -90,7 +90,7 @@ Class | Method | HTTP request | Description
  - [CreateTripRequest](doc/CreateTripRequest.md)
  - [DirectionResponse](doc/DirectionResponse.md)
  - [Distance](doc/Distance.md)
- - [Duration](doc/Duration.md)
+ - [DurationDto](doc/DurationDto.md)
  - [GeocodedWaypoint](doc/GeocodedWaypoint.md)
  - [GeocodingResult](doc/GeocodingResult.md)
  - [Geometry](doc/Geometry.md)

@@ -22,7 +22,7 @@ export 'package:openapi/src/model/create_profile_request.dart';
 export 'package:openapi/src/model/create_trip_request.dart';
 export 'package:openapi/src/model/direction_response.dart';
 export 'package:openapi/src/model/distance.dart';
-export 'package:openapi/src/model/duration.dart';
+export 'package:openapi/src/model/duration_dto.dart';
 export 'package:openapi/src/model/geocoded_waypoint.dart';
 export 'package:openapi/src/model/geocoding_result.dart';
 export 'package:openapi/src/model/geometry.dart';
