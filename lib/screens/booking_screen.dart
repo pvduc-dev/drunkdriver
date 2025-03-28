@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
+import 'package:drunkdriver/utils/location_utils.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -17,6 +18,7 @@ class BookingScreen extends StatefulWidget {
 class _BookingScreenState extends State<BookingScreen> {
   final Completer<MapLibreMapController> mapController = Completer();
   bool canInteractWithMap = false;
+  String _currentAddress = '';
 
   void _drawLine(List<List<double>> coordinates) async {
     final controller = await mapController.future;
@@ -52,6 +54,47 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     super.initState();
+    _checkLocationPermission();
+  }
+
+  Future<void> _checkLocationPermission() async {
+    try {
+      final position = await LocationUtils.getCurrentLocation();
+      if (!mounted) return;
+
+      final address = await LocationUtils.getAddressFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+      
+      setState(() {
+        _currentAddress = address;
+      });
+    } on LocationException catch (e) {
+      if (!mounted) return;
+
+      await showCupertinoDialog(
+        context: context,
+        builder:
+            (context) => CupertinoAlertDialog(
+              title: Text('Yêu cầu quyền truy cập'),
+              content: Text(e.message),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text('Hủy'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                CupertinoDialogAction(
+                  child: Text('Cài đặt'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    LocationUtils.openAppSettings();
+                  },
+                ),
+              ],
+            ),
+      );
+    }
   }
 
   @override
@@ -122,7 +165,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                         ),
                                       ),
                                       Text(
-                                        '13 Ngach 93 Ngo 59 Mễ Trì',
+                                        _currentAddress,
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,

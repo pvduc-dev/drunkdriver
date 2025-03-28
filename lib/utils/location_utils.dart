@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 
 /// Utility class để xử lý các tác vụ liên quan đến vị trí
@@ -59,6 +62,29 @@ class LocationUtils {
   /// Mở cài đặt vị trí của thiết bị để bật GPS
   static Future<void> openLocationSettings() async {
     await Geolocator.openLocationSettings();
+  }
+
+  static Future<String> getAddressFromCoordinates(
+    double latitude,
+    double longitude,
+  ) async {
+    try {
+      final response = await Dio().get(
+        'https://api.gongmap.vn/geocode/v2/reverse?lat=$latitude&lng=$longitude&key=kWTqo0JBQHi0WlZ0Yz6KQvzKQUmzHyauHiVRwKpD',
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.data);
+        if (data['status'] == 'OK') {
+          final result = data['result'];
+          return result['formatted_address'] as String;
+        }
+      }
+
+      return 'Không thể lấy địa chỉ';
+    } catch (e) {
+      return 'Không thể lấy địa chỉ';
+    }
   }
 }
 
