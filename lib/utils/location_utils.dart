@@ -63,29 +63,6 @@ class LocationUtils {
   static Future<void> openLocationSettings() async {
     await Geolocator.openLocationSettings();
   }
-
-  static Future<String> getAddressFromCoordinates(
-    double latitude,
-    double longitude,
-  ) async {
-    try {
-      final response = await Dio().get(
-        'https://api.gongmap.vn/geocode/v2/reverse?lat=$latitude&lng=$longitude&key=kWTqo0JBQHi0WlZ0Yz6KQvzKQUmzHyauHiVRwKpD',
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.data);
-        if (data['status'] == 'OK') {
-          final result = data['result'];
-          return result['formatted_address'] as String;
-        }
-      }
-
-      return 'Không thể lấy địa chỉ';
-    } catch (e) {
-      return 'Không thể lấy địa chỉ';
-    }
-  }
 }
 
 /// Custom exception cho các lỗi liên quan đến vị trí

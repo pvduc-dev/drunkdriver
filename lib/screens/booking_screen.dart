@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:drunkdriver/providers/api_provider.dart';
 import 'package:drunkdriver/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:drunkdriver/utils/location_utils.dart';
+import 'package:provider/provider.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -58,17 +60,19 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   Future<void> _checkLocationPermission() async {
+    final api = context.read<ApiProvider>().api;
     try {
       final position = await LocationUtils.getCurrentLocation();
       if (!mounted) return;
 
-      final address = await LocationUtils.getAddressFromCoordinates(
-        position.latitude,
-        position.longitude,
+      final response = await api.getGeoApi().geoControllerGetGeocode(
+        lat: position.latitude,
+        lng: position.longitude,
+        extra: {'context': context, 'isLoading': true},
       );
-      
+
       setState(() {
-        _currentAddress = address;
+        _currentAddress = response.data?.formattedAddress ?? '';
       });
     } on LocationException catch (e) {
       if (!mounted) return;

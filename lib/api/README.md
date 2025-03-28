@@ -70,6 +70,8 @@ Class | Method | HTTP request | Description
 [*AuthApi*](doc/AuthApi.md) | [**authControllerSendOtp**](doc/AuthApi.md#authcontrollersendotp) | **POST** /auth/send-otp | Gửi OTP đến số điện thoại
 [*AuthApi*](doc/AuthApi.md) | [**authControllerVerifyOtp**](doc/AuthApi.md#authcontrollerverifyotp) | **POST** /auth/verify-otp | Xác thực OTP
 [*DefaultApi*](doc/DefaultApi.md) | [**usersControllerCreate**](doc/DefaultApi.md#userscontrollercreate) | **POST** /users | 
+[*GeoApi*](doc/GeoApi.md) | [**geoControllerGetDistance**](doc/GeoApi.md#geocontrollergetdistance) | **GET** /geo/distance | 
+[*GeoApi*](doc/GeoApi.md) | [**geoControllerGetGeocode**](doc/GeoApi.md#geocontrollergetgeocode) | **GET** /geo/geocode | 
 [*TripsApi*](doc/TripsApi.md) | [**tripsControllerCreate**](doc/TripsApi.md#tripscontrollercreate) | **POST** /trips | 
 [*TripsApi*](doc/TripsApi.md) | [**tripsControllerFindAll**](doc/TripsApi.md#tripscontrollerfindall) | **GET** /trips | 
 [*TripsApi*](doc/TripsApi.md) | [**tripsControllerFindOne**](doc/TripsApi.md#tripscontrollerfindone) | **GET** /trips/{id} | 
@@ -81,14 +83,29 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [Address](doc/Address.md)
+ - [AddressComponent](doc/AddressComponent.md)
+ - [Compound](doc/Compound.md)
  - [CreateProfileDto](doc/CreateProfileDto.md)
  - [CreateProfileRequest](doc/CreateProfileRequest.md)
  - [CreateTripRequest](doc/CreateTripRequest.md)
+ - [DirectionResponse](doc/DirectionResponse.md)
+ - [Distance](doc/Distance.md)
+ - [Duration](doc/Duration.md)
+ - [GeocodedWaypoint](doc/GeocodedWaypoint.md)
+ - [GeocodingResult](doc/GeocodingResult.md)
+ - [Geometry](doc/Geometry.md)
+ - [GeometryLocation](doc/GeometryLocation.md)
+ - [LatLngLiteral](doc/LatLngLiteral.md)
+ - [Leg](doc/Leg.md)
  - [Location](doc/Location.md)
  - [OtpDto](doc/OtpDto.md)
+ - [PlusCode](doc/PlusCode.md)
+ - [Route](doc/Route.md)
  - [SendOtpData](doc/SendOtpData.md)
  - [SendOtpRequest](doc/SendOtpRequest.md)
  - [SendOtpResponse](doc/SendOtpResponse.md)
+ - [Step](doc/Step.md)
+ - [StepPolyline](doc/StepPolyline.md)
  - [Trip](doc/Trip.md)
  - [User](doc/User.md)
  - [UserDto](doc/UserDto.md)

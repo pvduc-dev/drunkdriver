@@ -1,12 +1,27 @@
 import 'package:openapi/src/model/address.dart';
+import 'package:openapi/src/model/address_component.dart';
+import 'package:openapi/src/model/compound.dart';
 import 'package:openapi/src/model/create_profile_dto.dart';
 import 'package:openapi/src/model/create_profile_request.dart';
 import 'package:openapi/src/model/create_trip_request.dart';
+import 'package:openapi/src/model/direction_response.dart';
+import 'package:openapi/src/model/distance.dart';
+import 'package:openapi/src/model/duration.dart';
+import 'package:openapi/src/model/geocoded_waypoint.dart';
+import 'package:openapi/src/model/geocoding_result.dart';
+import 'package:openapi/src/model/geometry.dart';
+import 'package:openapi/src/model/geometry_location.dart';
+import 'package:openapi/src/model/lat_lng_literal.dart';
+import 'package:openapi/src/model/leg.dart';
 import 'package:openapi/src/model/location.dart';
 import 'package:openapi/src/model/otp_dto.dart';
+import 'package:openapi/src/model/plus_code.dart';
+import 'package:openapi/src/model/route.dart';
 import 'package:openapi/src/model/send_otp_data.dart';
 import 'package:openapi/src/model/send_otp_request.dart';
 import 'package:openapi/src/model/send_otp_response.dart';
+import 'package:openapi/src/model/step.dart';
+import 'package:openapi/src/model/step_polyline.dart';
 import 'package:openapi/src/model/trip.dart';
 import 'package:openapi/src/model/user.dart';
 import 'package:openapi/src/model/user_dto.dart';
@@ -34,22 +49,52 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return (value is double ? value : double.parse('$value')) as ReturnType;
         case 'Address':
           return Address.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'AddressComponent':
+          return AddressComponent.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Compound':
+          return Compound.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'CreateProfileDto':
           return CreateProfileDto.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'CreateProfileRequest':
           return CreateProfileRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'CreateTripRequest':
           return CreateTripRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'DirectionResponse':
+          return DirectionResponse.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Distance':
+          return Distance.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Duration':
+          return Duration.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'GeocodedWaypoint':
+          return GeocodedWaypoint.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'GeocodingResult':
+          return GeocodingResult.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Geometry':
+          return Geometry.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'GeometryLocation':
+          return GeometryLocation.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'LatLngLiteral':
+          return LatLngLiteral.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Leg':
+          return Leg.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'Location':
           return Location.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'OtpDto':
           return OtpDto.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'PlusCode':
+          return PlusCode.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Route':
+          return Route.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'SendOtpData':
           return SendOtpData.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'SendOtpRequest':
           return SendOtpRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'SendOtpResponse':
           return SendOtpResponse.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Step':
+          return Step.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'StepPolyline':
+          return StepPolyline.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'Trip':
           return Trip.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'User':
