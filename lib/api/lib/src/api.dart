@@ -8,6 +8,8 @@ import 'package:openapi/src/auth/basic_auth.dart';
 import 'package:openapi/src/auth/bearer_auth.dart';
 import 'package:openapi/src/auth/oauth.dart';
 import 'package:openapi/src/api/auth_api.dart';
+import 'package:openapi/src/api/default_api.dart';
+import 'package:openapi/src/api/trips_api.dart';
 
 class Openapi {
   static const String basePath = r'http://192.168.31.98:3000';
@@ -64,5 +66,17 @@ class Openapi {
   /// by doing that all interceptors will not be executed
   AuthApi getAuthApi() {
     return AuthApi(dio);
+  }
+
+  /// Get DefaultApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  DefaultApi getDefaultApi() {
+    return DefaultApi(dio);
+  }
+
+  /// Get TripsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  TripsApi getTripsApi() {
+    return TripsApi(dio);
   }
 }

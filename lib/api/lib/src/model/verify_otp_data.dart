@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:openapi/src/model/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'verify_otp_data.g.dart';
@@ -20,9 +21,7 @@ class VerifyOtpData {
 
     required  this.accessToken,
 
-    required  this.refreshToken,
-
-    required  this.expiresIn,
+    required  this.user,
   });
 
   @JsonKey(
@@ -39,25 +38,13 @@ class VerifyOtpData {
 
   @JsonKey(
     
-    name: r'refreshToken',
+    name: r'user',
     required: true,
     includeIfNull: false,
   )
 
 
-  final String refreshToken;
-
-
-
-  @JsonKey(
-    
-    name: r'expiresIn',
-    required: true,
-    includeIfNull: false,
-  )
-
-
-  final num expiresIn;
+  final User user;
 
 
 
@@ -66,14 +53,12 @@ class VerifyOtpData {
     @override
     bool operator ==(Object other) => identical(this, other) || other is VerifyOtpData &&
       other.accessToken == accessToken &&
-      other.refreshToken == refreshToken &&
-      other.expiresIn == expiresIn;
+      other.user == user;
 
     @override
     int get hashCode =>
         accessToken.hashCode +
-        refreshToken.hashCode +
-        expiresIn.hashCode;
+        user.hashCode;
 
   factory VerifyOtpData.fromJson(Map<String, dynamic> json) => _$VerifyOtpDataFromJson(json);
 

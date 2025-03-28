@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:drunkdriver/widgets/primary_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
@@ -15,12 +16,6 @@ class BookingScreen extends StatefulWidget {
 class _BookingScreenState extends State<BookingScreen> {
   final Completer<MapLibreMapController> mapController = Completer();
   bool canInteractWithMap = false;
-  List<List<double>> coordinates = [
-    [105.62708795610837, 20.98788610554503],
-    [105.87410980252804, 21.035376606820478],
-    [106.11492370069283, 20.99369079087559],
-    [106.17031970357283, 20.890742429194773],
-  ];
 
   void _drawLine(List<List<double>> coordinates) async {
     final controller = await mapController.future;
@@ -56,7 +51,6 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     super.initState();
-    _drawLine(coordinates);
   }
 
   @override
@@ -73,7 +67,7 @@ class _BookingScreenState extends State<BookingScreen> {
         attributionButtonMargins: Point(-30, -30),
       ),
       bottomSheet: SizedBox(
-        height: 320,
+        height: 142,
         width: double.infinity,
         child: Container(
           decoration: BoxDecoration(
@@ -94,78 +88,121 @@ class _BookingScreenState extends State<BookingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(
-                title: Text(
-                  'Điểm xuất phát',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-                subtitle: Text('Toà nhà Sông Đà'),
-                trailing: const Icon(Icons.edit),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Divider(
-                  thickness: 1.0,
-                  color: Color(0xFF8FA1B7).withAlpha(89),
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  'Điểm đến',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-                subtitle: Text(
-                  'Số 123, đường Nguyễn Văn Cự, phường 1, quận 3, TP.HCM',
-                ),
-                trailing: const Icon(Icons.edit),
-              ),
-              Divider(thickness: 1.0, color: Color(0xFF8FA1B7).withAlpha(89)),
+              SizedBox(height: 8.0),
               Row(
                 children: [
                   Expanded(
-                    child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                        border: InputBorder.none,
-                      ),
-                      value: 'cash',
-                      items: [
-                        DropdownMenuItem(
-                          value: 'cash',
-                          child: Row(
-                            children: [
-                              Icon(Icons.money, color: Colors.green),
-                              SizedBox(width: 8.0),
-                              Text('Tiền mặt'),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: 'wallet',
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.account_balance_wallet,
-                                color: Colors.blue,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      onPressed: () {
+                        showCupertinoModalPopup(
+                          barrierDismissible: false,
+                          context: context,
+                          builder:
+                              (BuildContext context) => Container(
+                                height: 180,
+                                padding: const EdgeInsets.only(top: 6.0),
+                                margin: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom,
+                                ),
+                                color: CupertinoColors.systemBackground
+                                    .resolveFrom(context),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: CupertinoPicker(
+                                        magnification: 1.22,
+                                        squeeze: 1.2,
+                                        useMagnifier: true,
+                                        itemExtent: 32.0,
+                                        scrollController:
+                                            FixedExtentScrollController(
+                                              initialItem: 0,
+                                            ),
+                                        onSelectedItemChanged:
+                                            (int selectedItem) {},
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                CupertinoIcons.money_dollar,
+                                                color:
+                                                    CupertinoColors.activeGreen,
+                                              ),
+                                              SizedBox(width: 8.0),
+                                              Text('Tiền mặt'),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                CupertinoIcons.creditcard,
+                                                color:
+                                                    CupertinoColors.activeBlue,
+                                              ),
+                                              SizedBox(width: 8.0),
+                                              Text('Ví điện tử'),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    CupertinoButton(
+                                      child: Text(
+                                        'Xác nhận',
+                                        style: TextStyle(
+                                          color: CupertinoColors.activeBlue,
+                                        ),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                    SizedBox(height: 16.0),
+                                  ],
+                                ),
                               ),
-                              SizedBox(width: 8.0),
-                              Text('Ví điện tử'),
-                            ],
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.money_dollar,
+                            color: CupertinoColors.activeGreen,
                           ),
-                        ),
-                      ],
-                      onChanged: (value) {},
+                          SizedBox(width: 8.0),
+                          Text('Tiền mặt'),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(width: 16.0),
-                  Expanded(child: Text('Giá: 20.000đ')),
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '20.000đ',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
+              SizedBox(height: 8.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: PrimaryButton(text: 'Đặt tài xế', onPressed: () {}),
               ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 16.0),
             ],
           ),
         ),

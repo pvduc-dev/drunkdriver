@@ -7,6 +7,11 @@ void main() {
   final instance = Openapi().getAuthApi();
 
   group(AuthApi, () {
+    //Future<VerifyOtpResponse> authControllerCreateProfile(CreateProfileRequest createProfileRequest) async
+    test('test authControllerCreateProfile', () async {
+      // TODO
+    });
+
     // Gửi OTP đến số điện thoại
     //
     //Future<SendOtpResponse> authControllerSendOtp(SendOtpRequest sendOtpRequest) async
@@ -14,6 +19,8 @@ void main() {
       // TODO
     });
 
+    // Xác thực OTP
+    //
     //Future<VerifyOtpResponse> authControllerVerifyOtp(VerifyOtpRequest verifyOtpRequest) async
     test('test authControllerVerifyOtp', () async {
       // TODO

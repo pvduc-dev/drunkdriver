@@ -8,14 +8,13 @@ part of 'verify_otp_data.dart';
 
 VerifyOtpData _$VerifyOtpDataFromJson(Map<String, dynamic> json) =>
     $checkedCreate('VerifyOtpData', json, ($checkedConvert) {
-      $checkKeys(
-        json,
-        requiredKeys: const ['accessToken', 'refreshToken', 'expiresIn'],
-      );
+      $checkKeys(json, requiredKeys: const ['accessToken', 'user']);
       final val = VerifyOtpData(
         accessToken: $checkedConvert('accessToken', (v) => v as String),
-        refreshToken: $checkedConvert('refreshToken', (v) => v as String),
-        expiresIn: $checkedConvert('expiresIn', (v) => v as num),
+        user: $checkedConvert(
+          'user',
+          (v) => User.fromJson(v as Map<String, dynamic>),
+        ),
       );
       return val;
     });
@@ -23,6 +22,5 @@ VerifyOtpData _$VerifyOtpDataFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$VerifyOtpDataToJson(VerifyOtpData instance) =>
     <String, dynamic>{
       'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
-      'expiresIn': instance.expiresIn,
+      'user': instance.user.toJson(),
     };

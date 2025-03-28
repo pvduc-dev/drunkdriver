@@ -49,13 +49,13 @@ import 'package:openapi/openapi.dart';
 
 
 final api = Openapi().getAuthApi();
-final SendOtpRequest sendOtpRequest = ; // SendOtpRequest | 
+final CreateProfileRequest createProfileRequest = ; // CreateProfileRequest | 
 
 try {
-    final response = await api.authControllerSendOtp(sendOtpRequest);
+    final response = await api.authControllerCreateProfile(createProfileRequest);
     print(response);
 } catch on DioException (e) {
-    print("Exception when calling AuthApi->authControllerSendOtp: $e\n");
+    print("Exception when calling AuthApi->authControllerCreateProfile: $e\n");
 }
 
 ```
@@ -66,16 +66,31 @@ All URIs are relative to *http://192.168.31.98:3000*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+[*AuthApi*](doc/AuthApi.md) | [**authControllerCreateProfile**](doc/AuthApi.md#authcontrollercreateprofile) | **POST** /auth/profile | 
 [*AuthApi*](doc/AuthApi.md) | [**authControllerSendOtp**](doc/AuthApi.md#authcontrollersendotp) | **POST** /auth/send-otp | Gửi OTP đến số điện thoại
-[*AuthApi*](doc/AuthApi.md) | [**authControllerVerifyOtp**](doc/AuthApi.md#authcontrollerverifyotp) | **POST** /auth/verify-otp | 
+[*AuthApi*](doc/AuthApi.md) | [**authControllerVerifyOtp**](doc/AuthApi.md#authcontrollerverifyotp) | **POST** /auth/verify-otp | Xác thực OTP
+[*DefaultApi*](doc/DefaultApi.md) | [**usersControllerCreate**](doc/DefaultApi.md#userscontrollercreate) | **POST** /users | 
+[*TripsApi*](doc/TripsApi.md) | [**tripsControllerCreate**](doc/TripsApi.md#tripscontrollercreate) | **POST** /trips | 
+[*TripsApi*](doc/TripsApi.md) | [**tripsControllerFindAll**](doc/TripsApi.md#tripscontrollerfindall) | **GET** /trips | 
+[*TripsApi*](doc/TripsApi.md) | [**tripsControllerFindOne**](doc/TripsApi.md#tripscontrollerfindone) | **GET** /trips/{id} | 
+[*TripsApi*](doc/TripsApi.md) | [**tripsControllerRemove**](doc/TripsApi.md#tripscontrollerremove) | **DELETE** /trips/{id} | 
+[*TripsApi*](doc/TripsApi.md) | [**tripsControllerSse**](doc/TripsApi.md#tripscontrollersse) | **GET** /trips/sse | 
+[*TripsApi*](doc/TripsApi.md) | [**tripsControllerUpdate**](doc/TripsApi.md#tripscontrollerupdate) | **PATCH** /trips/{id} | 
 
 
 ## Documentation For Models
 
+ - [Address](doc/Address.md)
+ - [CreateProfileDto](doc/CreateProfileDto.md)
+ - [CreateProfileRequest](doc/CreateProfileRequest.md)
+ - [CreateTripRequest](doc/CreateTripRequest.md)
+ - [Location](doc/Location.md)
  - [OtpDto](doc/OtpDto.md)
  - [SendOtpData](doc/SendOtpData.md)
  - [SendOtpRequest](doc/SendOtpRequest.md)
  - [SendOtpResponse](doc/SendOtpResponse.md)
+ - [Trip](doc/Trip.md)
+ - [User](doc/User.md)
  - [UserDto](doc/UserDto.md)
  - [VerifyOtpData](doc/VerifyOtpData.md)
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)

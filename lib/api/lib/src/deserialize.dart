@@ -1,7 +1,14 @@
+import 'package:openapi/src/model/address.dart';
+import 'package:openapi/src/model/create_profile_dto.dart';
+import 'package:openapi/src/model/create_profile_request.dart';
+import 'package:openapi/src/model/create_trip_request.dart';
+import 'package:openapi/src/model/location.dart';
 import 'package:openapi/src/model/otp_dto.dart';
 import 'package:openapi/src/model/send_otp_data.dart';
 import 'package:openapi/src/model/send_otp_request.dart';
 import 'package:openapi/src/model/send_otp_response.dart';
+import 'package:openapi/src/model/trip.dart';
+import 'package:openapi/src/model/user.dart';
 import 'package:openapi/src/model/user_dto.dart';
 import 'package:openapi/src/model/verify_otp_data.dart';
 import 'package:openapi/src/model/verify_otp_request.dart';
@@ -25,6 +32,16 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return (valueString == 'true' || valueString == '1') as ReturnType;
         case 'double':
           return (value is double ? value : double.parse('$value')) as ReturnType;
+        case 'Address':
+          return Address.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'CreateProfileDto':
+          return CreateProfileDto.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'CreateProfileRequest':
+          return CreateProfileRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'CreateTripRequest':
+          return CreateTripRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Location':
+          return Location.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'OtpDto':
           return OtpDto.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'SendOtpData':
@@ -33,6 +50,10 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return SendOtpRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'SendOtpResponse':
           return SendOtpResponse.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'Trip':
+          return Trip.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'User':
+          return User.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'UserDto':
           return UserDto.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'VerifyOtpData':

@@ -1,5 +1,8 @@
+import 'package:drunkdriver/api/lib/openapi.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:drunkdriver/providers/api_provider.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -9,6 +12,25 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  List<Trip> _trips = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getTrips();
+  }
+
+  Future<void> _getTrips() async {
+    final api = context.read<ApiProvider>().api;
+    final response = await api.getTripsApi().tripsControllerFindAll(
+      extra: {'context': context, 'isLoading': true},
+    );
+    final trips = response.data;
+    setState(() {
+      _trips = trips ?? [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,27 +44,33 @@ class _HistoryScreenState extends State<HistoryScreen> {
           SizedBox(height: 16.0),
           Expanded(
             child: ListView.separated(
-              itemCount: 50,
+              itemCount: _trips.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(
-                    'Từ cổng trường Đại học Bách khoa đến cổng trường Đại học Bách khoa Hà Nội đến cổng trường Đại học Bách khoa Hà Nội',
+                    'Từ ${_trips[index].pickupLocation?.addressLine ?? ''} đến ${_trips[index].dropoffLocation?.addressLine ?? ''}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   subtitle: Text(
-                    DateFormat('HH:mm dd/MM/yyyy').format(DateTime.now()),
+                    DateFormat(
+                      'HH:mm dd/MM/yyyy',
+                    ).format(_trips[index].startTime ?? DateTime.now()),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  trailing: Text(
-                    NumberFormat.currency(
-                      locale: 'vi_VN',
-                      symbol: 'đ',
-                    ).format(100000),
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleMedium!.copyWith(color: Color(0xFF007AFF)),
+                  trailing: SizedBox(
+                    width: 100,
+                    child: Text(
+                      NumberFormat.currency(
+                        locale: 'vi_VN',
+                        symbol: 'đ',
+                      ).format(int.parse(_trips[index].actualCost ?? '0')),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Color(0xFF007AFF),
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
                   ),
                 );
               },

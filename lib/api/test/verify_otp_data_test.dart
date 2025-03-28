@@ -12,13 +12,8 @@ void main() {
       // TODO
     });
 
-    // String refreshToken
-    test('to test the property `refreshToken`', () async {
-      // TODO
-    });
-
-    // num expiresIn
-    test('to test the property `expiresIn`', () async {
+    // User user
+    test('to test the property `user`', () async {
       // TODO
     });
 
