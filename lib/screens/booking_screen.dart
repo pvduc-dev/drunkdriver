@@ -72,7 +72,7 @@ class _BookingScreenState extends State<BookingScreen> {
       );
 
       setState(() {
-        _currentAddress = response.data?.formattedAddress ?? '';
+        _currentAddress = response.data?.name ?? '';
       });
     } on LocationException catch (e) {
       if (!mounted) return;

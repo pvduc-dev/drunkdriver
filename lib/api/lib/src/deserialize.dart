@@ -1,21 +1,18 @@
 import 'package:openapi/src/model/address.dart';
-import 'package:openapi/src/model/address_component.dart';
-import 'package:openapi/src/model/compound.dart';
 import 'package:openapi/src/model/create_profile_dto.dart';
 import 'package:openapi/src/model/create_profile_request.dart';
 import 'package:openapi/src/model/create_trip_request.dart';
 import 'package:openapi/src/model/direction_response.dart';
 import 'package:openapi/src/model/distance.dart';
 import 'package:openapi/src/model/duration_dto.dart';
+import 'package:openapi/src/model/geocode_response.dart';
 import 'package:openapi/src/model/geocoded_waypoint.dart';
-import 'package:openapi/src/model/geocoding_result.dart';
 import 'package:openapi/src/model/geometry.dart';
 import 'package:openapi/src/model/geometry_location.dart';
 import 'package:openapi/src/model/lat_lng_literal.dart';
 import 'package:openapi/src/model/leg.dart';
 import 'package:openapi/src/model/location.dart';
 import 'package:openapi/src/model/otp_dto.dart';
-import 'package:openapi/src/model/plus_code.dart';
 import 'package:openapi/src/model/route.dart';
 import 'package:openapi/src/model/send_otp_data.dart';
 import 'package:openapi/src/model/send_otp_request.dart';
@@ -49,10 +46,6 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return (value is double ? value : double.parse('$value')) as ReturnType;
         case 'Address':
           return Address.fromJson(value as Map<String, dynamic>) as ReturnType;
-        case 'AddressComponent':
-          return AddressComponent.fromJson(value as Map<String, dynamic>) as ReturnType;
-        case 'Compound':
-          return Compound.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'CreateProfileDto':
           return CreateProfileDto.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'CreateProfileRequest':
@@ -65,10 +58,10 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return Distance.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'DurationDto':
           return DurationDto.fromJson(value as Map<String, dynamic>) as ReturnType;
+        case 'GeocodeResponse':
+          return GeocodeResponse.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'GeocodedWaypoint':
           return GeocodedWaypoint.fromJson(value as Map<String, dynamic>) as ReturnType;
-        case 'GeocodingResult':
-          return GeocodingResult.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'Geometry':
           return Geometry.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'GeometryLocation':
@@ -81,8 +74,6 @@ final _regMap = RegExp(r'^Map<String,(.*)>$');
           return Location.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'OtpDto':
           return OtpDto.fromJson(value as Map<String, dynamic>) as ReturnType;
-        case 'PlusCode':
-          return PlusCode.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'Route':
           return Route.fromJson(value as Map<String, dynamic>) as ReturnType;
         case 'SendOtpData':

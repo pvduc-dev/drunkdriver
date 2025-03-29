@@ -21,7 +21,7 @@ class Geometry {
 
     required  this.location,
 
-    required  this.boundary,
+     this.boundary,
   });
 
   @JsonKey(
@@ -39,12 +39,12 @@ class Geometry {
   @JsonKey(
     
     name: r'boundary',
-    required: true,
+    required: false,
     includeIfNull: false,
   )
 
 
-  final Object boundary;
+  final Object? boundary;
 
 
 

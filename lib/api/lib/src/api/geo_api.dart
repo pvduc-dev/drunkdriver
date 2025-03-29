@@ -10,7 +10,7 @@ import 'package:openapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
 import 'package:openapi/src/model/direction_response.dart';
-import 'package:openapi/src/model/geocoding_result.dart';
+import 'package:openapi/src/model/geocode_response.dart';
 
 class GeoApi {
 
@@ -110,9 +110,9 @@ _responseData = rawData == null ? null : deserialize<DirectionResponse, Directio
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [GeocodingResult] as data
+  /// Returns a [Future] containing a [Response] with a [GeocodeResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<GeocodingResult>> geoControllerGetGeocode({ 
+  Future<Response<GeocodeResponse>> geoControllerGetGeocode({ 
     required num lat,
     required num lng,
     CancelToken? cancelToken,
@@ -149,11 +149,11 @@ _responseData = rawData == null ? null : deserialize<DirectionResponse, Directio
       onReceiveProgress: onReceiveProgress,
     );
 
-    GeocodingResult? _responseData;
+    GeocodeResponse? _responseData;
 
     try {
 final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<GeocodingResult, GeocodingResult>(rawData, 'GeocodingResult', growable: true);
+_responseData = rawData == null ? null : deserialize<GeocodeResponse, GeocodeResponse>(rawData, 'GeocodeResponse', growable: true);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -164,7 +164,7 @@ _responseData = rawData == null ? null : deserialize<GeocodingResult, GeocodingR
       );
     }
 
-    return Response<GeocodingResult>(
+    return Response<GeocodeResponse>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

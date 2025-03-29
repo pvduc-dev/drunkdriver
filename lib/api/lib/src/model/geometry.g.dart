@@ -8,18 +8,18 @@ part of 'geometry.dart';
 
 Geometry _$GeometryFromJson(Map<String, dynamic> json) =>
     $checkedCreate('Geometry', json, ($checkedConvert) {
-      $checkKeys(json, requiredKeys: const ['location', 'boundary']);
+      $checkKeys(json, requiredKeys: const ['location']);
       final val = Geometry(
         location: $checkedConvert(
           'location',
           (v) => GeometryLocation.fromJson(v as Map<String, dynamic>),
         ),
-        boundary: $checkedConvert('boundary', (v) => v as Object),
+        boundary: $checkedConvert('boundary', (v) => v),
       );
       return val;
     });
 
 Map<String, dynamic> _$GeometryToJson(Geometry instance) => <String, dynamic>{
   'location': instance.location.toJson(),
-  'boundary': instance.boundary,
+  if (instance.boundary case final value?) 'boundary': value,
 };
