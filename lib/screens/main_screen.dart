@@ -2,6 +2,7 @@ import 'package:drunkdriver/screens/account_screen.dart';
 import 'package:drunkdriver/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:drunkdriver/widgets/bottom_nav_bar.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'history_screen.dart';
 import 'home_screen.dart';
@@ -28,6 +29,20 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> _requestLocationPermission() async {
+    final status = await Permission.location.request();
+    if (status.isDenied) {
+      await openAppSettings();
+    } else if (status.isPermanentlyDenied) {
+      await openAppSettings();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
