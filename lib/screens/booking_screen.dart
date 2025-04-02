@@ -203,7 +203,7 @@ class _BookingScreenState extends State<BookingScreen> {
             onMapCreated: (controller) => mapController.complete(controller),
             initialCameraPosition: CameraPosition(
               target: LatLng(21.03567430379084, 105.83059373638059),
-              zoom: 13,
+              zoom: 12,
             ),
             onStyleLoadedCallback:
                 () => setState(() => canInteractWithMap = true),
