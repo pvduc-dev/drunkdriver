@@ -10,10 +10,10 @@ Address _$AddressFromJson(Map<String, dynamic> json) =>
     $checkedCreate('Address', json, ($checkedConvert) {
       $checkKeys(
         json,
-        requiredKeys: const ['streetLine', 'latitude', 'longitude'],
+        requiredKeys: const ['addressLine', 'latitude', 'longitude'],
       );
       final val = Address(
-        streetLine: $checkedConvert('streetLine', (v) => v as String),
+        addressLine: $checkedConvert('addressLine', (v) => v as String),
         latitude: $checkedConvert('latitude', (v) => v as num),
         longitude: $checkedConvert('longitude', (v) => v as num),
       );
@@ -21,7 +21,7 @@ Address _$AddressFromJson(Map<String, dynamic> json) =>
     });
 
 Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
-  'streetLine': instance.streetLine,
+  'addressLine': instance.addressLine,
   'latitude': instance.latitude,
   'longitude': instance.longitude,
 };

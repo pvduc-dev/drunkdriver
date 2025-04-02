@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:drunkdriver/api/lib/openapi.dart';
 import 'package:drunkdriver/providers/api_provider.dart';
 import 'package:drunkdriver/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
-import 'package:drunkdriver/utils/location_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -20,7 +21,8 @@ class BookingScreen extends StatefulWidget {
 class _BookingScreenState extends State<BookingScreen> {
   final Completer<MapLibreMapController> mapController = Completer();
   bool canInteractWithMap = false;
-  String _currentAddress = '';
+  Leg? _leg;
+  late IO.Socket _socket;
 
   void _drawLine(List<List<double>> coordinates) async {
     final controller = await mapController.future;
@@ -53,52 +55,143 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _checkLocationPermission();
+  get actualCost =>
+      (((_leg?.distance.value.toDouble() ?? 0) * 10).round() / 1000).round() *
+      1000;
+
+  _zoomToBounds(List<List<double>> coordinates) async {
+    final controller = await mapController.future;
+    controller.animateCamera(
+      CameraUpdate.newLatLngBounds(
+        LatLngBounds(
+          southwest: LatLng(coordinates.first.last, coordinates.first.first),
+          northeast: LatLng(coordinates.last.last, coordinates.last.first),
+        ),
+        left: 70,
+        top: 70,
+        right: 70,
+        bottom: 70,
+      ),
+    );
   }
 
-  Future<void> _checkLocationPermission() async {
-    final api = context.read<ApiProvider>().api;
-    try {
-      final position = await LocationUtils.getCurrentLocation();
-      if (!mounted) return;
+  void initSocket() {
+    _socket = IO.io(
+      'http://192.168.31.98:3000',
+      IO.OptionBuilder().setTransports(['websocket']).disableAutoConnect().setAuth({
+        'token':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrODQ4NjU3MDc5MDYiLCJlbWFpbCI6bnVsbCwicm9sZSI6W10sImlhdCI6MTc0MzQ5OTIwNTA5MSwiZXhwIjoxNzQzNTMwNzYyNjkxfQ.i7zVZ6wKxzYHvzrDt7LtbNXU1zuj0llh9vZ8O8S1MBY',
+      }).build(),
+    );
 
-      final response = await api.getGeoApi().geoControllerGetGeocode(
-        lat: position.latitude,
-        lng: position.longitude,
-        extra: {'context': context, 'isLoading': true},
-      );
+    _socket.connect();
 
-      setState(() {
-        _currentAddress = response.data?.name ?? '';
-      });
-    } on LocationException catch (e) {
-      if (!mounted) return;
+    _socket.onConnect((_) {
+      print('Connected to WebSocket');
+    });
 
-      await showCupertinoDialog(
+    _socket.on('driverFound', (data) {
+      Navigator.pop(context);
+
+      // Navigator.pushNamed(context, '/driver-found', arguments: data);
+    });
+
+    _socket.on('noDriverFound', (data) {
+      Navigator.pop(context);
+      showCupertinoDialog(
         context: context,
         builder:
             (context) => CupertinoAlertDialog(
-              title: Text('Yêu cầu quyền truy cập'),
-              content: Text(e.message),
+              title: Text('Thông báo'),
+              content: Text(
+                'Không tìm thấy tài xế trong khu vực của bạn. Vui lòng thử lại',
+              ),
               actions: [
                 CupertinoDialogAction(
-                  child: Text('Hủy'),
+                  child: Text('Đóng'),
                   onPressed: () => Navigator.pop(context),
-                ),
-                CupertinoDialogAction(
-                  child: Text('Cài đặt'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    LocationUtils.openAppSettings();
-                  },
                 ),
               ],
             ),
       );
+    });
+
+    _socket.on('driverDeclined', (data) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(data['message'])));
+    });
+  }
+
+  Future<void> confirmBooking() async {
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:
+          (context) => CupertinoAlertDialog(
+            title: Text('Đang tìm kiếm tài xế cho bạn'),
+            content: Container(
+              margin: EdgeInsets.only(top: 16),
+              child: CupertinoActivityIndicator(),
+            ),
+          ),
+    );
+    final trip = await context
+        .read<ApiProvider>()
+        .api
+        .getTripsApi()
+        .tripsControllerCreate(
+          createTripRequest: CreateTripRequest(
+            customerId: 1,
+            paymentMethod: 'cash',
+            paymentStatus: 'pending',
+            pickupLocation: Location(
+              latitude: _leg?.startLocation.lat ?? 0,
+              longitude: _leg?.startLocation.lng ?? 0,
+              addressLine: _leg?.startAddress ?? '',
+            ),
+            dropoffLocation: Location(
+              latitude: _leg?.endLocation.lat ?? 0,
+              longitude: _leg?.endLocation.lng ?? 0,
+              addressLine: _leg?.endAddress ?? '',
+            ),
+            actualCost: actualCost.toString(),
+          ),
+          extra: {'context': context, 'isLoading': true},
+        );
+
+    _socket.emit('findDriver', {'tripId': trip.data?.id});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initSocket();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _leg = ModalRoute.of(context)?.settings.arguments as Leg?;
+    if (_leg != null) {
+      final coordinates =
+          _leg!.steps
+              .map(
+                (step) => [
+                  step.startLocation.lng.toDouble(),
+                  step.startLocation.lat.toDouble(),
+                ],
+              )
+              .toList();
+      _drawLine(coordinates);
+      _zoomToBounds(coordinates);
     }
+  }
+
+  @override
+  void dispose() {
+    _socket.disconnect();
+    super.dispose();
   }
 
   @override
@@ -126,7 +219,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: Colors.grey.withAlpha(30),
                       spreadRadius: 2,
                       blurRadius: 5,
                       offset: Offset(0, 2),
@@ -169,7 +262,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                         ),
                                       ),
                                       Text(
-                                        _currentAddress,
+                                        _leg?.startAddress ?? '',
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
@@ -217,7 +310,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                         ),
                                       ),
                                       Text(
-                                        'Lotte Mall West Lake Hà Nội',
+                                        _leg?.endAddress ?? '',
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
@@ -247,7 +340,7 @@ class _BookingScreenState extends State<BookingScreen> {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: Colors.grey.withAlpha(50),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: Offset(0, 3),
@@ -367,7 +460,8 @@ class _BookingScreenState extends State<BookingScreen> {
                           NumberFormat.currency(
                             locale: 'vi',
                             symbol: '₫',
-                          ).format(20000),
+                            decimalDigits: 0,
+                          ).format(actualCost),
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.w700,
@@ -379,7 +473,12 @@ class _BookingScreenState extends State<BookingScreen> {
                   ],
                 ),
                 SizedBox(height: 8.0),
-                PrimaryButton(text: 'Đặt tài xế', onPressed: () {}),
+                PrimaryButton(
+                  text: 'Đặt tài xế',
+                  onPressed: () {
+                    confirmBooking();
+                  },
+                ),
                 SizedBox(height: 24.0),
               ],
             ),

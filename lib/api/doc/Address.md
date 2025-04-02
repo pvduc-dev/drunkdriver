@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**streetLine** | **String** |  | 
+**addressLine** | **String** |  | 
 **latitude** | **num** |  | 
 **longitude** | **num** |  | 
 

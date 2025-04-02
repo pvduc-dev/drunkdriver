@@ -8,6 +8,17 @@ class ApiProvider {
 
   ApiProvider() {
     _api = Openapi(
+      dio: Dio(
+        BaseOptions(
+          baseUrl: 'http://192.168.31.98:3000',
+          connectTimeout: const Duration(milliseconds: 5000),
+          receiveTimeout: const Duration(milliseconds: 3000),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrODQ4NjU3MDc5MDYiLCJlbWFpbCI6bnVsbCwicm9sZSI6W10sImlhdCI6MTc0MzQ5OTIwNTA5MSwiZXhwIjoxNzQzNTMwNzYyNjkxfQ.i7zVZ6wKxzYHvzrDt7LtbNXU1zuj0llh9vZ8O8S1MBY',
+          },
+        ),
+      ),
       interceptors: [
         InterceptorsWrapper(
           onError: (DioException error, ErrorInterceptorHandler handler) {

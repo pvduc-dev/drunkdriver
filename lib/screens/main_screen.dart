@@ -31,18 +31,10 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  Future<void> _requestLocationPermission() async {
-    final status = await Permission.location.request();
-    if (status.isDenied) {
-      await openAppSettings();
-    } else if (status.isPermanentlyDenied) {
-      await openAppSettings();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
+    Permission.location.request();
   }
 
   @override

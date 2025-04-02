@@ -14,12 +14,10 @@ Geometry _$GeometryFromJson(Map<String, dynamic> json) =>
           'location',
           (v) => GeometryLocation.fromJson(v as Map<String, dynamic>),
         ),
-        boundary: $checkedConvert('boundary', (v) => v),
       );
       return val;
     });
 
 Map<String, dynamic> _$GeometryToJson(Geometry instance) => <String, dynamic>{
   'location': instance.location.toJson(),
-  if (instance.boundary case final value?) 'boundary': value,
 };

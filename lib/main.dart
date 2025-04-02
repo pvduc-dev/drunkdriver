@@ -21,7 +21,7 @@ class DrunkApp extends StatelessWidget {
       providers: [Provider(create: (context) => ApiProvider())],
       child: MaterialApp(
         title: 'SoberRide',
-        initialRoute: '/',
+        initialRoute: '/profile-creation',
         routes: {
           '/': (context) => MainScreen(),
           '/request': (context) => DriverRequestScreen(),

@@ -96,7 +96,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **tripsControllerFindOne**
-> String tripsControllerFindOne(id)
+> Trip tripsControllerFindOne(id)
 
 
 
@@ -123,7 +123,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+[**Trip**](Trip.md)
 
 ### Authorization
 
@@ -137,7 +137,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **tripsControllerRemove**
-> String tripsControllerRemove(id)
+> tripsControllerRemove(id)
 
 
 
@@ -149,8 +149,7 @@ final api = Openapi().getTripsApi();
 final String id = id_example; // String | 
 
 try {
-    final response = api.tripsControllerRemove(id);
-    print(response);
+    api.tripsControllerRemove(id);
 } catch on DioException (e) {
     print('Exception when calling TripsApi->tripsControllerRemove: $e\n');
 }
@@ -164,7 +163,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+void (empty response body)
 
 ### Authorization
 
@@ -173,7 +172,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -214,7 +213,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **tripsControllerUpdate**
-> String tripsControllerUpdate(id, body)
+> tripsControllerUpdate(id, body)
 
 
 
@@ -227,8 +226,7 @@ final String id = id_example; // String |
 final Object body = Object; // Object | 
 
 try {
-    final response = api.tripsControllerUpdate(id, body);
-    print(response);
+    api.tripsControllerUpdate(id, body);
 } catch on DioException (e) {
     print('Exception when calling TripsApi->tripsControllerUpdate: $e\n');
 }
@@ -243,7 +241,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+void (empty response body)
 
 ### Authorization
 
@@ -252,7 +250,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

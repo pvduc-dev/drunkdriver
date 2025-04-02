@@ -18,7 +18,7 @@ class Address {
   /// Returns a new [Address] instance.
   Address({
 
-    required  this.streetLine,
+    required  this.addressLine,
 
     required  this.latitude,
 
@@ -27,13 +27,13 @@ class Address {
 
   @JsonKey(
     
-    name: r'streetLine',
+    name: r'addressLine',
     required: true,
     includeIfNull: false,
   )
 
 
-  final String streetLine;
+  final String addressLine;
 
 
 
@@ -65,13 +65,13 @@ class Address {
 
     @override
     bool operator ==(Object other) => identical(this, other) || other is Address &&
-      other.streetLine == streetLine &&
+      other.addressLine == addressLine &&
       other.latitude == latitude &&
       other.longitude == longitude;
 
     @override
     int get hashCode =>
-        streetLine.hashCode +
+        addressLine.hashCode +
         latitude.hashCode +
         longitude.hashCode;
 

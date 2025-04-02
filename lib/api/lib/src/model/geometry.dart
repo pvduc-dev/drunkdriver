@@ -20,8 +20,6 @@ class Geometry {
   Geometry({
 
     required  this.location,
-
-     this.boundary,
   });
 
   @JsonKey(
@@ -36,29 +34,15 @@ class Geometry {
 
 
 
-  @JsonKey(
-    
-    name: r'boundary',
-    required: false,
-    includeIfNull: false,
-  )
-
-
-  final Object? boundary;
-
-
-
 
 
     @override
     bool operator ==(Object other) => identical(this, other) || other is Geometry &&
-      other.location == location &&
-      other.boundary == boundary;
+      other.location == location;
 
     @override
     int get hashCode =>
-        location.hashCode +
-        boundary.hashCode;
+        location.hashCode;
 
   factory Geometry.fromJson(Map<String, dynamic> json) => _$GeometryFromJson(json);
 

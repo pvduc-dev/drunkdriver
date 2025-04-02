@@ -188,9 +188,9 @@ _responseData = rawData == null ? null : deserialize<List<Trip>, Trip>(rawData, 
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [String] as data
+  /// Returns a [Future] containing a [Response] with a [Trip] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<String>> tripsControllerFindOne({ 
+  Future<Response<Trip>> tripsControllerFindOne({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -220,11 +220,11 @@ _responseData = rawData == null ? null : deserialize<List<Trip>, Trip>(rawData, 
       onReceiveProgress: onReceiveProgress,
     );
 
-    String? _responseData;
+    Trip? _responseData;
 
     try {
 final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<String, String>(rawData, 'String', growable: true);
+_responseData = rawData == null ? null : deserialize<Trip, Trip>(rawData, 'Trip', growable: true);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -235,7 +235,7 @@ _responseData = rawData == null ? null : deserialize<String, String>(rawData, 'S
       );
     }
 
-    return Response<String>(
+    return Response<Trip>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -259,9 +259,9 @@ _responseData = rawData == null ? null : deserialize<String, String>(rawData, 'S
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [String] as data
+  /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<String>> tripsControllerRemove({ 
+  Future<Response<void>> tripsControllerRemove({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -291,31 +291,7 @@ _responseData = rawData == null ? null : deserialize<String, String>(rawData, 'S
       onReceiveProgress: onReceiveProgress,
     );
 
-    String? _responseData;
-
-    try {
-final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<String, String>(rawData, 'String', growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<String>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
+    return _response;
   }
 
   /// tripsControllerSse
@@ -376,9 +352,9 @@ _responseData = rawData == null ? null : deserialize<String, String>(rawData, 'S
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [String] as data
+  /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<String>> tripsControllerUpdate({ 
+  Future<Response<void>> tripsControllerUpdate({ 
     required String id,
     required Object body,
     CancelToken? cancelToken,
@@ -427,31 +403,7 @@ _bodyData=jsonEncode(body);
       onReceiveProgress: onReceiveProgress,
     );
 
-    String? _responseData;
-
-    try {
-final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<String, String>(rawData, 'String', growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<String>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
+    return _response;
   }
 
 }

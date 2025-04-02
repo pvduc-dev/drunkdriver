@@ -1,7 +1,11 @@
+import 'package:drunkdriver/api/lib/openapi.dart';
+import 'package:drunkdriver/providers/api_provider.dart';
+import 'package:drunkdriver/screens/location_search_screen.dart';
 import 'package:drunkdriver/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ProfileCreationScreen extends StatefulWidget {
   const ProfileCreationScreen({super.key});
@@ -13,11 +17,36 @@ class ProfileCreationScreen extends StatefulWidget {
 class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
   String selectedGender = 'Male';
   DateTime? _selectedDate;
+  final _nameController = TextEditingController();
+  final _addressController = TextEditingController();
+  GeometryLocation? _geometryLocation;
 
+
+  _submit() {
+    print(_addressController.text);
+    context.read<ApiProvider>().api.getAuthApi().authControllerCreateProfile(
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrODQ4NjU3MDc5MDYiLCJlbWFpbCI6bnVsbCwicm9sZSI6W10sImlhdCI6MTc0MzYwMzUzODYxOSwiZXhwIjoxNzQzNjM1MDk2MjE5fQ.GpDYp3xWIpb6ftzW5N91r11NbHY8r0p3Y8pOh7KSf3M',
+      },
+      createProfileRequest: CreateProfileRequest(
+        name: _nameController.text,
+        isMale: selectedGender == 'Male',
+        dateOfBirth: _selectedDate!,
+        address: Address(
+          addressLine: _addressController.text,
+          latitude: _geometryLocation?.lat ?? 0,
+          longitude: _geometryLocation?.lng ?? 0,
+        ),
+      ),
+      extra: { 'context': context, 'isLoading': true },
+    );
+    if (!mounted) return;
+    Navigator.pushNamed(context, '/');
+  }
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
+      canPop: false,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -45,6 +74,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                         ),
                         SizedBox(height: 8.0),
                         CupertinoTextField(
+                          controller: _nameController,
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
                             color: Color(0xFFE2EAF1).withAlpha(51),
@@ -114,7 +144,61 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                         ),
                         SizedBox(height: 8.0),
                         GestureDetector(
-                          onTap: () async {},
+                          onTap: () async {
+                            final DateTime?
+                            pickedDate = await showCupertinoModalPopup(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 300,
+                                  padding: const EdgeInsets.only(top: 6.0),
+                                  margin: EdgeInsets.only(
+                                    bottom:
+                                        MediaQuery.of(
+                                          context,
+                                        ).viewInsets.bottom,
+                                  ),
+                                  color: CupertinoColors.systemBackground
+                                      .resolveFrom(context),
+                                  child: SafeArea(
+                                    top: false,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: CupertinoDatePicker(
+                                            initialDateTime:
+                                                _selectedDate ?? DateTime.now(),
+                                            mode: CupertinoDatePickerMode.date,
+                                            use24hFormat: true,
+                                            onDateTimeChanged: (
+                                              DateTime newDate,
+                                            ) {
+                                              setState(() {
+                                                _selectedDate = newDate;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        CupertinoButton(
+                                          child: Text('Xác nhận'),
+                                          onPressed: () {
+                                            Navigator.of(
+                                              context,
+                                            ).pop(_selectedDate);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                            if (pickedDate != null) {
+                              setState(() {
+                                _selectedDate = pickedDate;
+                              });
+                            }
+                          },
                           child: Container(
                             padding: const EdgeInsets.all(12.0),
                             decoration: BoxDecoration(
@@ -159,6 +243,8 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                         ),
                         SizedBox(height: 8.0),
                         CupertinoTextField(
+                          readOnly: true,
+                          controller: _addressController,
                           padding: const EdgeInsets.all(16.0),
                           maxLines: 3,
                           decoration: BoxDecoration(
@@ -169,6 +255,21 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
+                          onTap: () async {
+                            final PlaceResult result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => LocationSearchScreen(
+                                      title: 'Tìm kiếm địa chỉ',
+                                    ),
+                              ),
+                            );
+                            final response = await context.read<ApiProvider>().api.getGeoApi().geoControllerGetPlaceDetails(placeId: result.placeId);
+            
+                            _addressController.text = response.data?.result.formattedAddress ?? '';
+                            _geometryLocation = response.data?.result.geometry.location;
+                          },
                         ),
                       ],
                     ),
@@ -177,7 +278,8 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                 Expanded(child: Container()),
                 PrimaryButton(
                   onPressed: () {
-                    // Add your action here
+                    // Add your action here\
+                    _submit();
                   },
                   text: 'Đăng ký',
                 ),
